@@ -1,0 +1,57 @@
+package com.telesure.digitalamendments;
+
+import com.telesure.digitalamendments.testobj;
+import com.telesure.digitalamendments.error;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashMap;
+ruleflow-group "drldrl"
+rule "name  validation "
+when
+$testobj:testobj(testobj.name=="ramappa")
+$error:error()
+ $a:  ArrayList()  
+               from collect( Object() from $testobj.getError())              
+then
+System.out.println("name");
+//HashMap<String, String> hmap = new HashMap<String, String>($testobj.getResponse());
+$error.setKey("name");
+$error.setValue("error in name");
+System.out.println($error);
+$a.add($error);
+System.out.println($a);
+$testobj.setError($a);
+ System.out.println($testobj.getError());
+
+
+//List<String> al = $testobj.getMsgs();
+//$msgs.add("name is not valid");
+//$testobj.setMsgs(Arrays.asList("special characters are not allowed"));
+//al.add("name is ");
+//$testobj.setMsgs(Arrays.toString(al));
+end;
+
+rule "age  validation "
+when
+
+$testobj:testobj(testobj.age>=10 )
+$error:error()
+ $a:  ArrayList()  
+               from collect( Object() from $testobj.getError())  
+then
+System.out.println("age not valid");
+$error.setKey("age");
+$error.setValue("error in age");
+ $a.add($error);
+$testobj.setError($a);
+ System.out.println($testobj.getError());
+ //System.out.println("age not valid");
+// ArrayList<String> al = new ArrayList<String>($testobj.getMsgs());
+// al.add("age not valid ");
+// $testobj.setMsgs(Arrays.asList(al));
+// $testobj.getMsgs().add("age not valid");
+// List<String> al = new List<String>();
+//$testobj.setMsgs(Arrays.asList("age not valid"));
+//$testobj.setErrorMessage("not valid");
+end;
